@@ -1,0 +1,57 @@
+{% load static%}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Giriş Yap Kahve Evi</title>
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico'%}" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+  <form method="POST"> <!---->
+    {% csrf_token %}
+    {% if error %}
+        <div class"alert alert-danger">
+          {{error}}
+        </div>
+    {% endif %}
+    <div class="center">
+    <input type="checkbox" id="show">
+    <label for="show" class="show-btn"></label>
+    <label for="show" class="close-btn fas fa-times" title="close"></label>
+    <div class="container">
+    <div class="text">Kahve Evi</div>
+    <form action="index">
+    <div class="data">
+    <label for "username" class="form-label">E-Posta</label>
+    <input type="text" class="form-control" name="username">
+    </div>
+    <div class="data">
+    <label for="pasword" class="form-label">Şifre</label>
+    <input type="password" class="form-control" name="password">
+    </div>
+    <div class="forgot-pass">
+    </div>
+    <div class="btn">
+    <div class="inner">
+    </div>
+    <button type="submit" >Giriş Yap</button>
+    </div>
+    <hr>    
+    <br>
+    <div class="signup-link"> Üyeliğiniz yok mu? <a href="{% url 'signup' %}">Hemen Kaydolun</a></div>
+    <br>
+
+   </form>
+   <div class="btn">
+    <div class="inner">
+    </div>
+    <button onclick="indexx" type="onclick" >Anasayfa</button>
+    </div>
+</div>
+</div>
+
+</body>
+

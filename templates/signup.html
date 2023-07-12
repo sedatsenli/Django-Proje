@@ -1,0 +1,78 @@
+{% load static%}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Kayıt Ol Kahve Evi</title>
+    <link rel="stylesheet" href="{% static 'css/login.css'%}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico'%}" type="image/x-icon" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+  <form  method="POST"> <!--action="{% url 'login' %}"-->
+    {% csrf_token %}
+    {% if error %}
+        <div class"alert alert-danger">
+          {{error}}
+        </div>
+    {% endif %}
+    <form  method="POST">
+      {% csrf_token %}
+      {% if error %}
+          <div class"alert alert-danger">
+            {{error}}
+          </div>
+      {% endif %}
+      <div class="center">
+      <input type="checkbox" id="show">
+      <label for="show" class="show-btn"></label>
+      <label for="show" class="close-btn fas fa-times" title="close"></label>
+      <div class="container">
+      <div class="text">Kahve Evi</div>
+      <div class="data">
+      <label for "username" class="form-label">Kullanıcı Adı</label>
+      <input type="text" class="form-control" name="username">
+      </div>
+      <div class="data">
+        <label for "email" class="form-label">E-Posta</label>
+        <input type="text" class="form-control" name="email">
+        </div>
+        <div class="data">
+          <label for "firstname" class="form-label">İsim</label>
+          <input type="text" class="form-control" name="firstname">
+          </div>
+          <div class="data">
+            <label for "lastname" class="form-label">Soyisim </label>
+            <input type="text" class="form-control" name="lastname">
+            </div>
+      <div class="data">
+      <label for="password" class="form-label">Şifre</label>
+      <input type="password" class="form-control" name="password">
+      </div>
+      <div class="data">
+        <label for="repassword" class="form-label">Şifre Tekrar</label>
+        <input type="password" class="form-control" name="repassword">
+        </div>
+      <div class="forgot-pass">
+      <a href="{% url 'login' %}">Hesabınız var mı?</a></div>
+      <div class="inner">
+  
+      <input type="submit" value="Kayıt" class="btn btn-primary">
+      </div>
+            
+      <br>
+      <div class="signup-link"> Üyeliğiniz yok mu? <a href="{% url 'login' %}">Üyeliğiniz yok mu?</a></div>
+      <br>
+      <div class="btn">
+      <div class="inner">
+      </div>
+      <button onclick="indexx" type="onclick" >Anasayfa</button>
+      </div>
+     </form>
+    </div>
+   </form>
+</div>
+</div>
+
+</body>

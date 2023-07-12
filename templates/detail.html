@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kahve Evi</title>
+
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Damion' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" >
+  <link rel="stylesheet" href="{% static '/css/font-awesome.min.css' %}" >
+  <link rel="stylesheet" href="{% static '/css/templatemo-style.css' %}" >
+  <link rel="shortcut icon" href= "{% static 'img/favicon.ico' %}" type="image/x-icon" />
+</head>
+<body>
+  <div class="tm-top-header">
+    <div class="container">
+      <div class="row">
+        <div class="tm-top-header-inner">
+          <div class="tm-logo-container">
+            <img src="{% static 'img/logo.png' %}" alt="Logo" class="tm-site-logo">
+            <h1 class="tm-site-name tm-handwriting-font">Kahve Evi</h1>
+          </div>
+          <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+          </div>
+          <nav class="tm-nav">
+            <ul> <!--tıpkı static yüzdeleri gibi çektik url'i de -->
+              <li><a href="{% url 'indexx' %}" >Anasayfa</a></li> <!--if ile şart koştuk aktiflik butonu için-->
+              <li><a href="{% url 'today-special' %}"  >Bugün'e Özel</a></li>
+              <li><a href="{% url 'menu' %}">Menü</a></li>
+              <li><a href="{% url 'contact' %}" >Iletisim</a></li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+             
+              {% if user.is_authenticated %}     
+              <li class ="nav-item"><a class="nav-link" href="{% url 'logout' %}">Çıkış</a></li>
+              <li class ="nav-item"><a class="nav-link" href=""></a>Hoşgeldiniz, {{user.username}} </li>
+              <li class ="nav-item"><a class="nav-link" href="{% url 'index' %}">Satın Al</a></li>
+              {% else %}
+              <li class ="nav-item"><a class="nav-link" href="{% url 'login' %}">Giriş Yap</a></li>
+              <li class ="nav-item"><a class="nav-link" href="{% url 'signup' %}">Kayıt Ol</a></li>
+              
+              {% endif %}
+            </ul>
+          </nav>   
+        </div>           
+      </div>    
+    </div>
+  </div>
+<h1 style="text-align: center;">Sepet Detayları</h1>
+{% for item in cart %}
+    <div style="width: 300px; height: 200px; display: inline-block; border: 1px red dotted; margin-left: 25px;">
+        <h3>{{ item.product }}</h3>
+        <img src="{{ item.product.image.url }}" alt="" width="50" height="50">
+        <hr>
+
+        <b>{{ item.price }}</b>
+        <a href="{% url 'cart_remove' id=item.product.id %}">
+            <button class="btn btn-outline-warning">Sepetten Çıkar</button>
+        </a>
+    </div>
+ 
+{% endfor %}
+<h2>MEVCUT ÜRÜNLER = {{ cart.get_total_items }}</h2>
+<h1>TOPLAM TUTAR = {{ cart.get_total_price }}</h1>
+<hr> <br>
+<form method="post">
+  {% csrf_token %}
+  <div class="col-md-6">
+      <div class="billing-details">
+          <div class="section-title">
+              <h4 class="title">Satın Alma Detayları</h4>
+          </div>
+          <p>
+              <label for="id_first_name">İsim:</label>
+              <input type="text" name="first_name"  value="{{ order.first_name }}" class="input" maxlength="30" required id="id_first_name">
+          </p>
+          <p>
+              <label for="id_last_name">Soyisim:</label>
+              <input type="text" name="last_name"  value="{{ order.last_name }}" class="input" maxlength="20" required id="id_last_name">
+          </p>
+          <p>
+              <label for="id_address">Adres:</label>
+              <input type="text" name="address" value="{{ order.address }}" class="input" maxlength="150" id="id_address">
+          </p>
+          <p>
+              <label for="id_phone">Telefon:</label>
+              <input type="text" name="phone"  value="{{ order.phone }}"  class="input" maxlength="20" id="id_phone">
+          </p>
+          <p>
+              <button class="btn btn-outline-warning" type="submit" value="orderproduct">Siparişi Tamamla</button>
+          </p>
+      </div>
+  </div>
+  <div class="col-md-6">
+    <div class="shiping-methods">
+        <div class="section-title">
+            <h4 class="title">Ödeme Bilgileri</h4>
+        </div>
+        <p>
+          <label for="id_total_price">Toplam: {{ cart.get_total_price }} TL </label>
+          <input name="id_price"  value="{{ cart.get_total_price }}" class="input">
+        </p>
+        <p>
+            <label for="id_holder">Kredi Kartı Sahibi:</label>
+            <input type="text" name="holder" class="input" id="id_holder">
+        </p>
+        <p>
+            <label for="id_number">Kredi Kartı Numarası:</label>
+            <input type="text" name="number" class="input" id="id_number">
+        </p>
+        <p>
+            <label for="id_exp_date">Kredi Kartı Son Kullanma Tarihi:</label>
+            <input type="text" name="exp_date" class="input" placeholder="mm/yy" id="id_exp_date">
+        </p>
+        <p>
+            <label for="id_sec_number">Güvenlik Numarası:</label>
+            <input type="text" name="sec_number" class="input" id="id_sec_number">
+        </p>
+    </div>
+</div>
+</form>
+
+
+
+
+
+</body>
+</html>
